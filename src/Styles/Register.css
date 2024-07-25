@@ -28,11 +28,13 @@
 
 .logo-container {
     margin-bottom: 5px;
+    margin-right: 70px;
 }
 
-.logo {
+.logologo {
     width: 200px;
     height: auto;
+    margin-left: 60px;
 }
 
 .content {

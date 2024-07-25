@@ -1,0 +1,117 @@
+.music-library h1 {
+    color: #ffffff;
+}
+
+.music-upload {
+    margin: 40px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.lib-body {
+    background-image: linear-gradient(to right, #05ab0b, #373fdd);
+}
+
+.music-upload input[type="text"] {
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.music-upload input[type="file"] {
+    margin: 10px 0;
+}
+
+.music-upload button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.music-list1 {
+    margin: 100px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.lib-back {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.music-library button {
+    background-color: #12b406;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.lib-back:hover {
+    color: #ffffff;
+}
+
+.music-list1 h2 {
+    margin-bottom: 20px;
+}
+
+.music-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.music-item1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    width: 80%;
+    background-color: #fff;
+}
+
+.music-item1 span {
+    flex: 1;
+}
+
+.music-item1 audio {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.music-item1 button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.music-item1 button:nth-child(3) {
+    background-color: #28a745;
+    color: white;
+}
+
+.music-item1 button:nth-child(4) {
+    background-color: #dc3545;
+    color: white;
+}
