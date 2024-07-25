@@ -17,11 +17,9 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await axios.post('http://localhost:3001/api/users/loginpage', { email, password });
             alert(response.data.message);
-            // Redirect to home page upon successful login
             navigate('/first');
         } catch (error) {
             console.error('Login failed:', error);
@@ -31,7 +29,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="logo-container">
-                <img src={Logo} alt="Spotify Logo" className="logo" />
+                <img src={Logo} alt="Spotify Logo" className="logologo" />
             </div>
             <div className="content">
                 <h2>Log in to Spotify</h2>

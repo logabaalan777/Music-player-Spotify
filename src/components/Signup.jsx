@@ -32,7 +32,7 @@ const Signup = () => {
     return (
         <div className="signup-container">
             <div className="logo-container">
-                <img src={Logo} alt="Spotify Logo" className="logo" />
+                <img src={Logo} alt="Spotify Logo" className="logologo" />
             </div>
             <div className="content">
                 <h2>Signup to start Listening</h2>

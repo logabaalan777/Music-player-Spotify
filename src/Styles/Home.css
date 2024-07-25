@@ -46,6 +46,7 @@ button[type="submit"] {
     transition: background-color 0.3s ease;
     font-size: 18px;
     font-weight: bold;
+    margin-right: 90px;
 }
 
 button[type="submit"]:hover {
@@ -84,4 +85,5 @@ button[type="submit"]:hover {
 .artist-item label span {
     font-size: 14px;
     font-weight: bold;
+    margin-top: 5px;
 }

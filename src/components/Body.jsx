@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { FaBell, FaUser, FaPlay, FaPause } from 'react-icons/fa';
+import React from 'react';
+import { FaPlay, FaBell, FaUser } from 'react-icons/fa';
 import '../Styles/Body.css';
 import allout from '../images/Allout.jpeg';
 import best from '../images/bestofall.jpeg';
@@ -14,59 +13,38 @@ import top30 from '../images/top30dance.jpeg';
 import top30love from '../images/top30love.jpeg';
 import toplovehits from '../images/toplovehits.jpeg';
 import valentine from '../images/valentine.jpeg';
-import BloodySweet from "../audios/BloodySweet.mp3";
-import LeoDasEntry from "../audios/LeoDasEntry.mp3";
-import Badass from "../audios/Badass.mp3";
-import Naaready from "../audios/NaaReady.mp3";
-import Loki from "../audios/Lokiverse.mp3";
 
-const Body = () => {
-    const [isPlaying, setIsPlaying] = useState({
-        "All outof 10's": false,
-        "Best of All time": false,
-        "Long Drive hits": false,
-        "Hot Hits": false,
-        "Tamil Vibes": false,
-        "Valentine's Hits": false,
-        "Top Love Hits": false,
-        "Top 30 Love": false,
-        "Top 30 Hits": false,
-        "Party Time": false,
-        "Night Melodies": false,
-        "90's Love Hits": false,
-    });
-    const audioRef = useRef(new Audio());
+const musicMapping = {
+    "All outof 10's": [0, 1, 3, 18, 21, 22],
+    "Best of All time": [2, 4, 1, 21, 22],
+    "Tamil Vibes": [0, 1, 17, 18, 20, 21],
+    "Hot Hits": [2, 4, 24, 25],
+    "Long Drive hits": [5, 6, 7, 8, 9],
+    "90's Love Hits": [28, 4, 22, 24],
+    "Night Melodies": [10, 11, 12, 13],
+    "Party Time": [3, 14, 15, 16, 19],
+    "Top 30 Hits": [1, 2, 18, 21],
+    "Top 30 Love": [14, 10, 23, 24, 25, 27],
+    "Top Love Hits": [10, 23, 25, 27, 26],
+    "Valentine's Hits": [10, 23, 25, 27],
+};
 
-    const togglePlay = (folder) => {
-        if (isPlaying[folder]) {
-            audioRef.current.pause();
-        } else {
-            const musicFiles = {
-                "All outof 10's": [BloodySweet, LeoDasEntry, Badass, Naaready, Loki],
-                "Best of All time": [BloodySweet, LeoDasEntry],
-                "Long Drive hits": [BloodySweet, LeoDasEntry, Badass, Naaready, Loki],
-                "Hot Hits": [LeoDasEntry, Naaready],
-                "Tamil Vibes": [BloodySweet, Loki],
-                "Valentine's Hits": [Loki],
-                "Top Love Hits": [LeoDasEntry, Loki],
-                "Top 30 Love": [LeoDasEntry, Naaready, Loki],
-                "Top 30 Hits": [LeoDasEntry, Badass, Naaready],
-                "Party Time": [BloodySweet, LeoDasEntry],
-                "Night Melodies": [Badass, Naaready, Loki],
-                "90's Love Hits": [Naaready, Loki],
-            };
+const getRandomSongId = (title) => {
+    const songs = musicMapping[title];
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    return songs[randomIndex];
+};
 
-            const randomIndex = Math.floor(Math.random() * musicFiles[folder].length);
-            const randomMusicFile = musicFiles[folder][randomIndex];
-
-            audioRef.current.src = randomMusicFile;
-            audioRef.current.play();
-        }
-        setIsPlaying(prevState => ({
-            ...prevState,
-            [folder]: !prevState[folder]
-        }));
-    };
+const Body = ({ playMusic }) => {
+    const renderMusicCard = (title, image) => (
+        <div className="music-card">
+            <img src={image} alt={title} className="music-image" />
+            <h3 className="music-name">{title}</h3>
+            <button className="music-play-button" onClick={() => playMusic(getRandomSongId(title))}>
+                <FaPlay />
+            </button>
+        </div>
+    );
 
     return (
         <div className="body">
@@ -83,164 +61,44 @@ const Body = () => {
                 <h2>Daily Music</h2>
             </div>
             <div className="music-list">
-                <div className="music-card">
-                    <img src={allout} alt="Music" className="music-image" />
-                    <h3 className="music-name">All outof 10's</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("All outof 10's")}>
-                        {isPlaying["All outof 10's"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={best} alt="Music" className="music-image" />
-                    <h3 className="music-name">Best of All time</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Best of All time")}>
-                        {isPlaying["Best of All time"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={happy} alt="Music" className="music-image" />
-                    <h3 className="music-name">Tamil Vibes</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Tamil Vibes")}>
-                        {isPlaying["Tamil Vibes"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={hothits} alt="Music" className="music-image" />
-                    <h3 className="music-name">Hot Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Hot Hits")}>
-                        {isPlaying["Hot Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={longdrive} alt="Music" className="music-image" />
-                    <h3 className="music-name">Long Drive hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Long Drive hits")}>
-                        {isPlaying["Long Drive hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
+                {renderMusicCard("All outof 10's", allout)}
+                {renderMusicCard("Best of All time", best)}
+                {renderMusicCard("Tamil Vibes", happy)}
+                {renderMusicCard("Hot Hits", hothits)}
+                {renderMusicCard("Long Drive hits", longdrive)}
             </div>
             <div className="music-heading">
                 <h2>Fresh New Music</h2>
             </div>
             <div className="music-list">
-                <div className="music-card">
-                    <img src={lovehits90} alt="Music" className="music-image" />
-                    <h3 className="music-name">90's Love Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("90's Love Hits")}>
-                        {isPlaying["90's Love Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={nightmelodies} alt="Music" className="music-image" />
-                    <h3 className="music-name">Night Melodies</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Night Melodies")}>
-                        {isPlaying["Night Melodies"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={partytime} alt="Music" className="music-image" />
-                    <h3 className="music-name">Party Time</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Party Time")}>
-                        {isPlaying["Party Time"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={top30} alt="Music" className="music-image" />
-                    <h3 className="music-name">Top 30 Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Top 30 Hits")}>
-                        {isPlaying["Top 30 Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={top30love} alt="Music" className="music-image" />
-                    <h3 className="music-name">Top 30 Love</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Top 30 Love")}>
-                        {isPlaying["Top 30 Love"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
+                {renderMusicCard("90's Love Hits", lovehits90)}
+                {renderMusicCard("Night Melodies", nightmelodies)}
+                {renderMusicCard("Party Time", partytime)}
+                {renderMusicCard("Top 30 Hits", top30)}
+                {renderMusicCard("Top 30 Love", top30love)}
             </div>
             <div className="music-heading">
-                <h2>Made for You</h2>
+                <h2>Listen With Love</h2>
             </div>
             <div className="music-list">
-                <div className="music-card">
-                    <img src={toplovehits} alt="Music" className="music-image" />
-                    <h3 className="music-name">Top Love Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Top Love Hits")}>
-                        {isPlaying["Top Love Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={valentine} alt="Music" className="music-image" />
-                    <h3 className="music-name">Valentine's Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Valentine's Hits")}>
-                        {isPlaying["Valentine's Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={allout} alt="Music" className="music-image" />
-                    <h3 className="music-name">All outof 10's</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("All outof 10's")}>
-                        {isPlaying["All outof 10's"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={best} alt="Music" className="music-image" />
-                    <h3 className="music-name">Best of All time</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Best of All time")}>
-                        {isPlaying["Best of All time"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={happy} alt="Music" className="music-image" />
-                    <h3 className="music-name">Tamil Vibes</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Tamil Vibes")}>
-                        {isPlaying["Tamil Vibes"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
+                {renderMusicCard("Top Love Hits", toplovehits)}
+                {renderMusicCard("Valentine's Hits", valentine)}
+                {renderMusicCard("Top 30 Hits", top30)}
+                {renderMusicCard("All outof 10's", allout)}
+                {renderMusicCard("90's Love Hits", lovehits90)}
             </div>
             <div className="music-heading">
                 <h2>Recently Played</h2>
             </div>
             <div className="music-list">
-                <div className="music-card">
-                    <img src={hothits} alt="Music" className="music-image" />
-                    <h3 className="music-name">Hot Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Hot Hits")}>
-                        {isPlaying["Hot Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={top30love} alt="Music" className="music-image" />
-                    <h3 className="music-name">Top 30 Love</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Top 30 Love")}>
-                        {isPlaying["Top 30 Love"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={nightmelodies} alt="Music" className="music-image" />
-                    <h3 className="music-name">Night Melodies</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Night Melodies")}>
-                        {isPlaying["Night Melodies"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={longdrive} alt="Music" className="music-image" />
-                    <h3 className="music-name">Long Drive Hits</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Long Drive Hits")}>
-                        {isPlaying["Long Drive Hits"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
-                <div className="music-card">
-                    <img src={partytime} alt="Music" className="music-image" />
-                    <h3 className="music-name">Party Time</h3>
-                    <button className="music-play-button" onClick={() => togglePlay("Party Time")}>
-                        {isPlaying["Party Time"] ? <FaPause /> : <FaPlay />}
-                    </button>
-                </div>
+                {renderMusicCard("90's Love Hits", lovehits90)}
+                {renderMusicCard("Night Melodies", nightmelodies)}
+                {renderMusicCard("Party Time", partytime)}
+                {renderMusicCard("Top 30 Hits", top30)}
+                {renderMusicCard("Top 30 Love", top30love)}
             </div>
         </div>
     );
-}
+};
 
 export default Body;
